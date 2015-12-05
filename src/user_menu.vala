@@ -35,7 +35,7 @@ namespace Edge {
             this.box.pack_end(hbox, false, false, 0);
 
             Gtk.Button button = Edge.make_button("user-info");
-            button.set_label("Cristian García");
+            button.set_label(GLib.Environment.get_real_name());
             hbox.pack_start(button, false, false, 0);
 
             hbox.pack_end(Edge.make_button("system-shutdown"), false, false, 0);
