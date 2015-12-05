@@ -14,7 +14,7 @@ namespace Edge {
 
         public class AppsMenu() {
             this.set_title("Edge Apps Menu");
-            this.set_size_request(450, 410);
+            this.set_size_request(510, 475);
             this.set_gravity(Gdk.Gravity.NORTH_WEST);
 
             this.apps_manager = new Edge.AppsManager();
@@ -43,9 +43,13 @@ namespace Edge {
             hbox.pack_end(button, false, false, 0);
 
             this.stack = new Gtk.Stack();
+            this.stack.set_margin_top(5);
+            this.stack.set_margin_start(40);
+            this.stack.set_margin_end(40);
             this.box.pack_start(this.stack, true, true, 0);
 
             hbox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+            hbox.set_margin_top(4);
             this.box.pack_end(hbox, false, false, 0);
 
             this.switcher = new Gtk.StackSwitcher();
