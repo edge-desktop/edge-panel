@@ -1,14 +1,12 @@
 namespace Edge {
 
-    public class UserMenu: Gtk.Window {
+    public class UserMenu: Edge.MenuWindow {
 
         public Gtk.Box box;
 
         public class UserMenu() {
-            this.set_type_hint(Gdk.WindowTypeHint.DOCK);
+            this.set_title("Edge User Menu");
             this.set_size_request(300, 350);
-            this.set_border_width(8);
-            this.add_events(Gdk.EventMask.FOCUS_CHANGE_MASK);
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.add(this.box);
@@ -39,13 +37,6 @@ namespace Edge {
             hbox.pack_start(button, false, false, 0);
 
             hbox.pack_end(Edge.make_button("system-shutdown"), false, false, 0);
-
-            this.focus_out_event.connect(this.foucus_out_event_cb);
-        }
-
-        private bool foucus_out_event_cb(Gtk.Widget self, Gdk.EventFocus event) {
-            print("focus out\n");
-            return false;
         }
     }
 }

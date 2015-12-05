@@ -216,15 +216,14 @@ namespace Edge {
         }
     }
 
-    public class ClockMenu: Gtk.Window {
+    public class ClockMenu: Edge.MenuWindow {
 
         public Gtk.Box box;
         public Edge.Calendar calendar;
         public Gtk.Box events_box;
 
         public class ClockMenu() {
-            this.set_type_hint(Gdk.WindowTypeHint.DOCK);
-            this.set_border_width(8);
+            this.set_title("Edge Calendar Menu");
             this.set_size_request(320, 480);
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);

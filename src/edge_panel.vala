@@ -33,14 +33,17 @@ namespace Edge {
             this.apps_button = this.make_button("Applications");
             this.apps_button.toggled.connect(this.apps_toggled);
             this.box.add(this.apps_button);
+            this.apps_menu.hide.connect(() => { this.apps_button.set_active(false); });
 
             this.clock_button = this.make_button("00:00");
             this.clock_button.toggled.connect(this.clock_toggled);
             this.box.add(this.clock_button);
+            this.clock_menu.hide.connect(() => { this.clock_button.set_active(false); });
 
             this.user_button = this.make_button();
             this.user_button.toggled.connect(this.menu_toggled);
             this.box.add(this.user_button);
+            this.user_menu.hide.connect(() => { this.user_button.set_active(false); });
 
             Gtk.Box icons_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
             this.user_button.add(icons_box);
@@ -114,7 +117,7 @@ namespace Edge {
                 this.apps_menu.show_all();
                 this.clock_button.set_active(false);
                 this.user_button.set_active(false);
-            } else {
+            } else if (!this.apps_button.get_active() && this.apps_menu.get_visible()) {
                 this.apps_menu.hide();
             }
 
@@ -126,7 +129,7 @@ namespace Edge {
                 this.apps_button.set_active(false);
                 this.user_button.set_active(false);
                 this.clock_menu.show_all();
-            } else {
+            } else if (!this.clock_button.get_active() && this.clock_menu.get_visible()) {
                 this.clock_menu.hide();
             }
 
@@ -138,7 +141,7 @@ namespace Edge {
                 this.apps_button.set_active(false);
                 this.clock_button.set_active(false);
                 this.user_menu.show_all();
-            } else {
+            } else if (!this.clock_button.get_active() && this.user_menu.get_visible()) {
                 this.user_menu.hide();
             }
 

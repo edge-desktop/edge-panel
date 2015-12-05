@@ -1,17 +1,19 @@
 namespace Edge {
 
-    public class AppsMenu: Gtk.Window {
+    public class AppsMenu: Edge.MenuWindow {
 
         public Gtk.Box box;
+        public Gtk.Revealer entry_revealer;
+        public Gtk.SearchEntry search_entry;
         public Gtk.Stack stack;
         public Gtk.StackSwitcher switcher;
         public Gtk.Box box_today;
         public Gtk.Box box_apps;
 
         public class AppsMenu() {
-            this.set_type_hint(Gdk.WindowTypeHint.DOCK);
-            this.set_border_width(8);
+            this.set_title("Edge Apps Menu");
             this.set_size_request(480, 420);
+            this.set_gravity(Gdk.Gravity.NORTH_WEST);
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.add(this.box);
@@ -19,8 +21,21 @@ namespace Edge {
             Gtk.Box hbox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
             this.box.pack_start(hbox, false, false, 0);
 
-            hbox.pack_start(Edge.make_button("open-menu", 24), false, false, 0);
-            hbox.pack_end(Edge.make_button("edit-find", 24), false, false, 0);
+            Gtk.Button button = Edge.make_button("open-menu", 24);
+            hbox.pack_start(button, false, false, 0);
+
+            this.entry_revealer = new Gtk.Revealer();
+            hbox.pack_start(this.entry_revealer, true, true, 0);
+
+            this.search_entry = new Gtk.SearchEntry();
+            this.search_entry.set_placeholder_text("Search an application");
+            this.search_entry.set_can_focus(true);
+            this.entry_revealer.add(this.search_entry);
+            this.entry_revealer.set_reveal_child(false);
+
+            button = Edge.make_button("edit-find", 24);
+            button.clicked.connect(this.reveal_search_entry);
+            hbox.pack_end(button, false, false, 0);
 
             this.stack = new Gtk.Stack();
             this.box.pack_start(this.stack, true, true, 0);
@@ -34,6 +49,17 @@ namespace Edge {
 
             this.make_today();
             this.make_apps();
+
+            this.key_release_event.connect(this.key_release_cb);
+            this.hide.connect(this.hide_cb);
+        }
+
+        private bool key_release_cb(Gtk.Widget self, Gdk.EventKey event) {
+            return false;
+        }
+
+        private void hide_cb(Gtk.Widget self) {
+            this.entry_revealer.set_reveal_child(false);
         }
 
         private void make_today() {
@@ -44,6 +70,15 @@ namespace Edge {
         private void make_apps() {
             this.box_apps = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.stack.add_titled(this.box_apps, "Apps", "Apps");
+        }
+
+        public void reveal_search_entry(Gtk.Button button) {
+            this.entry_revealer.set_reveal_child(!this.entry_revealer.get_child_revealed());
+            this.search_entry.set_text("");
+
+            if (!this.entry_revealer.get_child_revealed()) {
+                this.search_entry.grab_focus();
+            }
         }
     }
 }
