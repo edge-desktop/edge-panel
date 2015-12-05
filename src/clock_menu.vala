@@ -85,7 +85,7 @@ namespace Edge {
     public class Calendar: Gtk.Box {
 
         public int button_radius = 15;
-        public int button_space = 1;
+        public int button_space = 3;
 
         public string current_date;
 
@@ -95,7 +95,7 @@ namespace Edge {
 
         public Calendar() {
             this.set_orientation(Gtk.Orientation.VERTICAL);
-            this.set_size_request(100, 200);
+            this.set_size_request(200, 100);
             this.set_margin_top(10);
             this.set_margin_bottom(10);
             this.set_margin_start(10);
@@ -225,7 +225,7 @@ namespace Edge {
         public class ClockMenu() {
             this.set_type_hint(Gdk.WindowTypeHint.DOCK);
             this.set_border_width(8);
-            this.set_size_request(200, 480);
+            this.set_size_request(320, 480);
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.add(this.box);
