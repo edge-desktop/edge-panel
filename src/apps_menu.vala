@@ -92,7 +92,16 @@ namespace Edge {
 
             foreach (Edge.App app in apps) {
                 Edge.AppButton button = new Edge.AppButton(app);
+                button.run_app.connect(this.run_app);
                 this.box_apps.add(button);
+            }
+        }
+
+        private void run_app(Edge.AppButton button) {
+            this.hide();
+            bool runned = Edge.run_app(button.app);
+            if (!runned) {
+                // Make a notification
             }
         }
 

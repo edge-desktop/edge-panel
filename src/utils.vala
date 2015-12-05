@@ -50,4 +50,18 @@ namespace Edge {
         }
         return array;
     }
+
+    public bool run_app(Edge.App app) {
+        GLib.Thread<bool> thread = new GLib.Thread<bool>(app.name, () => {
+            try {
+                GLib.Process.spawn_command_line_async(app.exec);
+            } catch (GLib.SpawnError e) {
+                return false;
+            }
+
+            return true;
+        });
+
+        return thread.join();
+    }
 }

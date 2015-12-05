@@ -198,6 +198,8 @@ namespace Edge {
 
     public class AppButton: Gtk.Button {
 
+        public signal void run_app();
+
         public Edge.App app;
         public Gtk.Box box;
 
@@ -217,6 +219,8 @@ namespace Edge {
             Gtk.Label label = new Gtk.Label(this.app.name);
             label.set_ellipsize(Pango.EllipsizeMode.END);
             this.box.pack_start(label, false, false, 0);
+
+            this.clicked.connect(() => { this.run_app(); });
         }
     }
 }

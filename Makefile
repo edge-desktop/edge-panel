@@ -8,7 +8,9 @@ SRC = src/edge_panel.vala \
       src/user_menu.vala \
       src/utils.vala
 
+OPTIONS = --target-glib 2.32
+
 BIN = edge-panel
 
 all:
-	valac $(PKGS) $(SRC) -o $(BIN) 
+	valac $(PKGS) $(SRC) $(OPTIONS) -o $(BIN) 
