@@ -1,6 +1,7 @@
 PKGS = --pkg gtk+-3.0
 
 SRC = src/edge_panel.vala \
+      src/apps_manager.vala \
       src/menu_window.vala \
       src/apps_menu.vala \
       src/clock_menu.vala \

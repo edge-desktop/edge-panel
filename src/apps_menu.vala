@@ -2,18 +2,23 @@ namespace Edge {
 
     public class AppsMenu: Edge.MenuWindow {
 
+        public Edge.AppsManager apps_manager;
+
         public Gtk.Box box;
         public Gtk.Revealer entry_revealer;
         public Gtk.SearchEntry search_entry;
         public Gtk.Stack stack;
         public Gtk.StackSwitcher switcher;
         public Gtk.Box box_today;
-        public Gtk.Box box_apps;
+        public Gtk.FlowBox box_apps;
 
         public class AppsMenu() {
             this.set_title("Edge Apps Menu");
-            this.set_size_request(480, 420);
+            this.set_size_request(450, 410);
             this.set_gravity(Gdk.Gravity.NORTH_WEST);
+
+            this.apps_manager = new Edge.AppsManager();
+            //this.apps_manager.reload_apps();
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.add(this.box);
@@ -68,8 +73,27 @@ namespace Edge {
         }
 
         private void make_apps() {
-            this.box_apps = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-            this.stack.add_titled(this.box_apps, "Apps", "Apps");
+            this.apps_manager.reload_apps();
+
+            Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow(null, null);
+            this.stack.add_titled(scroll, "Apps", "Apps");
+
+            this.box_apps = new Gtk.FlowBox();
+            this.box_apps.set_min_children_per_line(4);
+            this.box_apps.set_max_children_per_line(4);
+            this.box_apps.set_row_spacing(1);
+            this.box_apps.set_column_spacing(1);
+            this.box_apps.set_selection_mode(Gtk.SelectionMode.NONE);
+            this.box_apps.set_homogeneous(true);
+
+            scroll.add(this.box_apps);
+
+            GLib.List<Edge.App> apps = this.apps_manager.get_apps();
+
+            foreach (Edge.App app in apps) {
+                Edge.AppButton button = new Edge.AppButton(app);
+                this.box_apps.add(button);
+            }
         }
 
         public void reveal_search_entry(Gtk.Button button) {

@@ -90,7 +90,7 @@ namespace Edge {
             try {
                 style_provider.load_from_file(file);
             } catch (GLib.Error error) {
-                GLib.warning(@"Error: cann't load edge-panel.css");
+                GLib.warning("Error: cann't load edge-panel.css");
                 return;
             }
 
