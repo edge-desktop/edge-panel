@@ -1,0 +1,27 @@
+@define-color bg_color #262c37;
+
+GtkWindow {
+	background-color: @bg_color;
+}
+
+.button {
+	border-width: 0px;
+	border-radius: 0px;
+	border-style: none;
+}
+
+GtkBox .button:hover {
+	background-image: none;
+	background-color: @bg_color;
+	border-color: @bg_color;
+}
+
+.button:active {
+	background-image: none;
+	border-color: @bg_color;
+}
+
+.label {
+	color: #fff;
+	font: Segoe UI;
+}
