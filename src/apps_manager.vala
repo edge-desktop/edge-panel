@@ -56,7 +56,14 @@ namespace Edge {
 
                 // --- <Exec>
                 try {
-                    this.exec = kf.get_value("Desktop Entry", "Exec");
+                    string command = kf.get_value("Desktop Entry", "Exec");
+                    if ("%" in command) {
+                        int index = command.index_of("%", 0);
+                        this.exec = command.slice(0, index);
+                    } else {
+                        this.exec = command;
+                    }
+
                 } catch (KeyFileError e) {
                     this.valid = false;
                     return;
