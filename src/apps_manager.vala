@@ -146,7 +146,7 @@ namespace Edge {
             this.apps = new GLib.List<Edge.App>();
         }
 
-        private void load_apps() {
+        private void load_apps(string search="") {
             GLib.Cancellable cancellable = new GLib.Cancellable();
             string split_text = "#####";
             string[] names = { };
@@ -167,7 +167,14 @@ namespace Edge {
 		                    }
 
 		                    Edge.App app = new Edge.App(path);
-		                    if (app.is_valid()) {
+		                    if (app != null && !app.is_valid()) {
+		                        continue;
+		                    }
+
+		                    string search_text = search.down().strip();
+		                    string name_text = app.name.down().strip();
+
+		                    if (search_text in name_text) {
 		                        names += (app.name + split_text + app.file);
 		                        apps += app;
     		                }
@@ -190,12 +197,9 @@ namespace Edge {
             }
         }
 
-        public void reload_apps() {
-            //foreach (Edge.App app in this.apps) {
-            //    this.apps.remove(app);
-            //}
-
-            this.load_apps();
+        public void reload_apps(string search="") {
+            this.apps = new GLib.List<Edge.App>();
+            this.load_apps(search);
         }
 
         public GLib.List get_apps() {

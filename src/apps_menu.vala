@@ -15,10 +15,8 @@ namespace Edge {
         public class AppsMenu() {
             this.set_title("Edge Apps Menu");
             this.set_size_request(510, 475);
-            this.set_gravity(Gdk.Gravity.NORTH_WEST);
 
             this.apps_manager = new Edge.AppsManager();
-            //this.apps_manager.reload_apps();
 
             this.box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             this.add(this.box);
@@ -35,6 +33,7 @@ namespace Edge {
             this.search_entry = new Gtk.SearchEntry();
             this.search_entry.set_placeholder_text("Search an application");
             this.search_entry.set_can_focus(true);
+            this.search_entry.changed.connect(() => { this.search_apps(this.search_entry.get_text()); });
             this.entry_revealer.add(this.search_entry);
             this.entry_revealer.set_reveal_child(false);
 
@@ -77,8 +76,6 @@ namespace Edge {
         }
 
         private void make_apps() {
-            this.apps_manager.reload_apps();
-
             Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow(null, null);
             this.stack.add_titled(scroll, "Apps", "Apps");
 
@@ -89,16 +86,9 @@ namespace Edge {
             this.box_apps.set_column_spacing(1);
             this.box_apps.set_selection_mode(Gtk.SelectionMode.NONE);
             this.box_apps.set_homogeneous(true);
-
             scroll.add(this.box_apps);
 
-            GLib.List<Edge.App> apps = this.apps_manager.get_apps();
-
-            foreach (Edge.App app in apps) {
-                Edge.AppButton button = new Edge.AppButton(app);
-                button.run_app.connect(this.run_app);
-                this.box_apps.add(button);
-            }
+            this.search_apps("");
         }
 
         private void run_app(Edge.AppButton button) {
@@ -116,6 +106,25 @@ namespace Edge {
             if (!this.entry_revealer.get_child_revealed()) {
                 this.search_entry.grab_focus();
             }
+        }
+
+        public void search_apps(string text) {
+            GLib.Idle.add(() => {
+                foreach (Gtk.Widget widget in this.box_apps.get_children()) {
+                    this.box_apps.remove(widget);
+                }
+
+                this.apps_manager.reload_apps(text);
+
+                foreach (Edge.App app in this.apps_manager.apps) {
+                    Edge.AppButton button = new Edge.AppButton(app);
+                    button.run_app.connect(this.run_app);
+                    this.box_apps.add(button);
+                }
+
+                this.box_apps.show_all();
+                return false;
+            });
         }
     }
 }
