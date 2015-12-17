@@ -25,3 +25,30 @@ GtkBox .button:hover {
 	color: #fff;
 	font: Segoe UI;
 }
+
+.button {
+    padding: 6px 2px;
+    border-radius: 4px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: alpha(white,0);
+    border-bottom-color: alpha(black,0);
+    background-color: alpha(@base_color,0);
+    background-image: none;
+    color: @text_color;
+    font: bold;
+
+    -GtkWidget-focus-padding: 1;
+    -GtkWidget-focus-line-width: 0;
+}
+
+.button:active,
+.button:active:hover,
+.button:checked:checked {
+    border-color: transparent;
+    border-top-color: alpha(white,0);
+    border-bottom-color: alpha(@selected_bg_color,1);
+    background-color: alpha(@base_color, 0);
+    color: @text_color;
+}
