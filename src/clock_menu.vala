@@ -45,13 +45,13 @@ namespace Edge {
     }
 
     public string[] get_week_days() {
-        return { "Sunday",
-                 "Monday",
+        return { "Monday",
                  "Tuesday",
                  "Wednesday",
                  "Thursday",
                  "Friday",
-                 "Saturday" };
+                 "Saturday",
+                 "Sunday" };
     }
 
     public string get_week_day(int index) {

@@ -3,13 +3,13 @@ namespace Edge {
     public class AppsMenu: Edge.MenuWindow {
 
         public Edge.AppsManager apps_manager;
+        public Edge.TodayScope today_scope;
 
         public Gtk.Box box;
         public Gtk.Revealer entry_revealer;
         public Gtk.SearchEntry search_entry;
         public Gtk.Stack stack;
         public Gtk.StackSwitcher switcher;
-        public Gtk.Box box_today;
         public Gtk.FlowBox box_apps;
 
         public class AppsMenu() {
@@ -71,8 +71,8 @@ namespace Edge {
         }
 
         private void make_today() {
-            this.box_today = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
-            this.stack.add_titled(this.box_today, "Today", "Today");
+            this.today_scope = new Edge.TodayScope();
+            this.stack.add_titled(this.today_scope, "Today", "Today");
         }
 
         private void make_apps() {
