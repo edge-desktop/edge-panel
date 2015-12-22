@@ -17,8 +17,8 @@ namespace Edge {
         public Panel(GLib.File theme_file) {
             this.set_type_hint(Gdk.WindowTypeHint.DOCK);
             this.move(0, 0);
-            this.set_border_width(0);
             this.set_size_request(this.width, this.height);
+            this.set_border_width(0);
             this.set_app_paintable(true);
             this.set_visual(screen.get_rgba_visual());
 
@@ -68,9 +68,19 @@ namespace Edge {
         }
 
         private bool draw_cb(Gtk.Widget self, Cairo.Context context) {
+            int width = Gdk.Screen.width();
+            int height = 30;
+
+            if (width != this.width || height != this.height) {
+                this.width = width;
+                this.height = height;
+                this.set_size_request(this.width, this.height);
+            }
+
             context.set_source_rgba(0, 0, 0, 0.5411764705882353);
             context.set_operator(Cairo.Operator.SOURCE);
             context.paint();
+
             return false;
         }
 
@@ -96,7 +106,6 @@ namespace Edge {
 
             Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), style_provider,
                                                      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
         }
 
         private Gtk.ToggleButton make_button(string? text = null) {
