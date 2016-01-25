@@ -10,6 +10,7 @@ namespace Edge {
         public Edge.AppsMenu apps_menu;
 
         public Gtk.ButtonBox box;
+        public Gtk.ToggleButton expose_button;
         public Gtk.ToggleButton apps_button;
         public Gtk.ToggleButton clock_button;
         public Gtk.ToggleButton user_button;
@@ -26,9 +27,16 @@ namespace Edge {
             this.clock_menu = new Edge.ClockMenu();
             this.user_menu = new Edge.UserMenu();
 
+            Gtk.Box hbox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
+            this.add(hbox);
+
+            this.expose_button = this.make_button(null, "start-here");
+            this.expose_button.toggled.connect(this.expose_toggled);
+            hbox.pack_start(this.expose_button, false, false, 0);
+
             this.box = new Gtk.ButtonBox(Gtk.Orientation.HORIZONTAL);
             this.box.set_layout(Gtk.ButtonBoxStyle.EDGE);   // "EDGE" coincidence? I do not think so xD
-            this.add(this.box);
+            hbox.pack_start(this.box, true, true, 0);
 
             this.apps_button = this.make_button("Applications");
             this.apps_button.toggled.connect(this.apps_toggled);
@@ -108,7 +116,7 @@ namespace Edge {
                                                      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
 
-        private Gtk.ToggleButton make_button(string? text = null) {
+        private Gtk.ToggleButton make_button(string? text = null, string? icon_name = null) {
             Gtk.ToggleButton button = new Gtk.ToggleButton();
             button.set_border_width(0);
             button.set_relief(Gtk.ReliefStyle.NONE);
@@ -116,9 +124,16 @@ namespace Edge {
             if (text != null) {
                 Gtk.Label label = new Gtk.Label(text);
                 button.add(label);
+            } else if (icon_name != null) {
+                Gtk.Image image = Edge.make_image(icon_name, 24, true);
+                button.add(image);
             }
 
             return button;
+        }
+
+        private void expose_toggled(Gtk.ToggleButton button) {
+            Edge.run_cmd(Edge.EXPOSE_CMD);
         }
 
         private void apps_toggled(Gtk.ToggleButton button) {

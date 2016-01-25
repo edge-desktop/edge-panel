@@ -64,4 +64,8 @@ namespace Edge {
 
         return thread.join();
     }
+
+    public bool run_cmd(string cmd) {
+        return true;
+    }
 }
