@@ -45,6 +45,8 @@ namespace Edge {
             this.stack.set_margin_top(5);
             this.stack.set_margin_start(40);
             this.stack.set_margin_end(40);
+            this.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT);
+            this.stack.set_transition_duration(250);
             this.box.pack_start(this.stack, true, true, 0);
 
             hbox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 0);
