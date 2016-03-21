@@ -51,16 +51,29 @@ namespace Edge {
         return array;
     }
 
-    public bool run_app(Edge.App app) {
-        GLib.Thread<bool> thread = new GLib.Thread<bool>(app.name, () => {
-            try {
-                GLib.Process.spawn_command_line_async(app.exec);
-            } catch (GLib.SpawnError e) {
-                return false;
-            }
+	class SpawnProcess
+	{
+		public Edge.App app;
 
-            return true;
-        });
+		public SpawnProcess(Edge.App app)
+		{
+			this.app = app;
+		}
+
+		public bool spawn_process()
+		{
+			try {
+				GLib.Process.spawn_command_line_async(app.exec);
+			} catch (GLib.SpawnError e) {
+				return false;
+			}
+			return true;
+		}
+	}
+
+    public bool run_app(Edge.App app) {
+		SpawnProcess pspawn = new SpawnProcess(app);
+        GLib.Thread<bool> thread = new GLib.Thread<bool>.try(app.name, pspawn.spawn_process);
 
         return thread.join();
     }

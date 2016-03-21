@@ -1,1 +1,11 @@
+# Build directories
+build
+build-linux
+build-linux32
+build-linux64
+build-win
+build-win32
+build-win64
+build-macos
+
 edge-panel
