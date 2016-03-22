@@ -1,54 +1,61 @@
 @define-color bg_color #262c37;
 
-GtkWindow {
+GtkWindow
+{
 	background-color: @bg_color;
 }
 
-.button {
+.button
+{
 	border-width: 0px;
 	border-radius: 0px;
 	border-style: none;
 }
 
-GtkBox .button:hover {
+GtkBox.button: hover
+{
 	background-image: none;
 	background-color: @bg_color;
 	border-color: @bg_color;
 }
 
-.button:active {
+.button: active
+{
 	background-image: none;
 	border-color: @bg_color;
 }
 
-.label {
+.label
+{
 	color: #fff;
 	font: Segoe UI;
 }
 
-.button {
-    padding: 6px 2px;
-    border-radius: 4px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: transparent;
-    border-top-color: alpha(white,0);
-    border-bottom-color: alpha(black,0);
-    background-color: alpha(@base_color,0);
-    background-image: none;
-    color: @text_color;
-    font: bold;
+.button
+{
+	padding: 6px 2px;
+	border-radius: 4px;
+	border-width: 3px;
+	border-style: solid;
+	border-color: transparent;
+	border-top-color: alpha(white,0);
+	border-bottom-color: alpha(black,0);
+	background-color: alpha(@base_color,0);
+	background-image: none;
+	color: @text_color;
+	font: bold;
 
-    -GtkWidget-focus-padding: 1;
-    -GtkWidget-focus-line-width: 0;
+	-GtkWidget-focus-padding: 1;
+	-GtkWidget-focus-line-width: 0;
 }
 
 .button:active,
 .button:active:hover,
-.button:checked:checked {
-    border-color: transparent;
-    border-top-color: alpha(white,0);
-    border-bottom-color: alpha(@selected_bg_color,1);
-    background-color: alpha(@base_color, 0);
-    color: @text_color;
+.button:checked:checked
+{
+	border-color: transparent;
+	border-top-color: alpha(white,0);
+	border-bottom-color: alpha(@selected_bg_color,1);
+	background-color: alpha(@base_color, 0);
+	color: @text_color;
 }
