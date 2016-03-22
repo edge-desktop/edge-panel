@@ -4,6 +4,7 @@ namespace Edge {
 
         public int width = Gdk.Screen.width();
         public int height = 30;
+	public bool is_themed = false;
 
         public Edge.UserMenu user_menu;
         public Edge.ClockMenu clock_menu;
@@ -103,12 +104,14 @@ namespace Edge {
                                 32, Gdk.PropMode.REPLACE, (uint8[])struts, 12);
         }
 
-        private void load_theme(GLib.File file) {
+        public void load_theme(GLib.File file) {
             Gtk.CssProvider style_provider = new Gtk.CssProvider();
             try {
                 style_provider.load_from_file(file);
+		this.is_themed = false;
             } catch (GLib.Error error) {
-                GLib.warning("Error: cann't load edge-panel.css");
+                GLib.warning("Error: cann't load " + file.get_path());
+		this.is_themed = false;
                 return;
             }
 
@@ -188,6 +191,11 @@ void main(string[] args) {
     GLib.File this_file = GLib.File.new_for_commandline_arg(args[0]);
     GLib.File file = GLib.File.new_for_path(GLib.Path.build_filename(this_file.get_parent().get_path(), "edge-panel.css"));
 
-    new Edge.Panel(file);
+    Edge.Panel panel = new Edge.Panel(file);
+    if (!panel.is_themed)
+        panel.load_theme(GLib.File.new_for_path(GLib.Path.build_filename("/usr/share/edge-panel/edge-panel.css")));
+    if (!panel.is_themed)
+        panel.load_theme(GLib.File.new_for_path(GLib.Path.build_filename("/usr/local/share/edge-panel/edge-panel.css")));
+
     Gtk.main();
 }

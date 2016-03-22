@@ -1,5 +1,5 @@
 project(
-'opplyse',
+'edge-panel',
 ['vala', 'c']
 )
 
@@ -19,11 +19,15 @@ configure_file(
 input : 'src/edge-panel.css',
 output : 'edge-panel.css',
 configuration : conf_data,
+install : true,
+install_dir : 'share/edge-panel/',
 )
 
 executable(
 name,
 sources,
 dependencies : dependencies,
-vala_args : '--target-glib=2.32'
+vala_args : '--target-glib=2.32',
+install : true,
+install_dir : 'bin/',
 )
