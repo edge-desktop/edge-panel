@@ -186,7 +186,7 @@ void main(string[] args) {
     Gtk.init(ref args);
 
     GLib.File this_file = GLib.File.new_for_commandline_arg(args[0]);
-    GLib.File file = GLib.File.new_for_path(GLib.Path.build_filename(this_file.get_parent().get_path(), "src/edge-panel.css"));
+    GLib.File file = GLib.File.new_for_path(GLib.Path.build_filename(this_file.get_parent().get_path(), "edge-panel.css"));
 
     new Edge.Panel(file);
     Gtk.main();

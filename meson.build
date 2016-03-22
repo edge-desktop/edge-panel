@@ -14,6 +14,13 @@ dependencies += dependency('gtk+-3.0')
 
 subdir('src')
 
+conf_data = configuration_data()
+configure_file(
+input : 'src/edge-panel.css',
+output : 'edge-panel.css',
+configuration : conf_data,
+)
+
 executable(
 name,
 sources,
